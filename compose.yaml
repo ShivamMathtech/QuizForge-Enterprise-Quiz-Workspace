@@ -1,0 +1,21 @@
+services:
+  quizforge:
+    build: .
+    ports:
+      - "127.0.0.1:4000:4000"
+    environment:
+      # Local Docker development. Follow docs/DEPLOYMENT.md for HTTPS production.
+      NODE_ENV: development
+      ENABLE_DEMO_ACCOUNTS: "true"
+      COOKIE_SECURE: "false"
+      COOKIE_SAME_SITE: lax
+      ALLOWED_ORIGINS: http://localhost:4000
+      DATABASE_PATH: /app/data/quizforge.sqlite
+      ALLOW_REGISTRATION: "true"
+    volumes:
+      - quizforge-data:/app/data
+      - quizforge-backups:/app/backups
+    restart: unless-stopped
+volumes:
+  quizforge-data:
+  quizforge-backups:
